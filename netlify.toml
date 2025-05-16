@@ -1,6 +1,6 @@
 [build]
   command = "nx build root --prod" # Replace app-name with your actual app name
-  publish = "dist/apps/your-app/browser" # Path to your browser dist folder
+  publish = "dist/apps/root/browser" # Path to your browser dist folder
   functions = "netlify/functions"
 
 [[redirects]]
