@@ -1,14 +1,15 @@
 // apps/root/server.ts
 
-import { AngularAppEngine, createRequestHandler } from '@angular/ssr';
-import { getContext } from '@netlify/angular-runtime/context.mjs';
+import { CommonEngine } from '@angular/ssr/node';
+import { render } from '@netlify/angular-runtime/common-engine.mjs';
 import { convertIPEmail } from '@wlocalhost/ngx-email-builder-convertor';
 
-const angularAppEngine = new AngularAppEngine();
+const commonEngine = new CommonEngine();
 
-async function netlifyAppEngineHandler(request: Request): Promise<Response> {
+export async function netlifyCommonEngineHandler(
+  request: Request
+): Promise<Response> {
   const url = new URL(request.url);
-  const context = getContext();
 
   // Custom API endpoint
   if (url.pathname === '/api/convert' && request.method === 'POST') {
@@ -30,13 +31,13 @@ async function netlifyAppEngineHandler(request: Request): Promise<Response> {
     }
   }
 
-  // Fallback to Angular SSR
-  const response = await angularAppEngine.handle(request, context);
-  return response ?? new Response('Not found', { status: 404 });
+  // All other requests: standard Angular SSR render
+  return await render(commonEngine);
 }
 
-// Entry point that Netlify bundles as an Edge Function
-export const reqHandler = createRequestHandler(netlifyAppEngineHandler);
+// This is the entry point Netlify will bundle as your SSR Edge Function:
+export const reqHandler = netlifyCommonEngineHandler;
 
-// Default export so Angular builder can find and re-export it
+// Add a default export so that Nx’s generated main-server.js
+// can re-export it without complaining:
 export default reqHandler;
