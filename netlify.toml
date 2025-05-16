@@ -1,11 +1,10 @@
+# netlify.toml (simplified version - no SSR)
 [build]
-  # Install dependencies with --no-frozen-lockfile first, then build
-  command = "pnpm install @netlify/angular-runtime --no-frozen-lockfile --legacy-peer-deps && nx build root && nx run root:server:production"
+  # Simple client-side build
+  command = "nx build root --configuration=production"
   publish = "dist/apps/root/browser"
   functions = "netlify/functions"
 
-# This redirect rule ensures that requests to /api/convert get sent to your Netlify function
-# Other external API calls (like appname.com/builder/sendtemplate.php) are not affected
 [[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/:splat"
