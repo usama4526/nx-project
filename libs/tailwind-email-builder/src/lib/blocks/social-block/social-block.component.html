@@ -1,0 +1,21 @@
+<ng-container ngForm>
+  @if (networks().length) {
+    @for (network of networks(); track network.name) {
+      <div class="network">
+        <div [ngStyle]="iconStyles()">
+          <img [src]="network.name | socialPath" [width]="options().iconSize.value" [ngClass]="network.name"
+               [alt]="network.name" />
+        </div>
+        @if (network.label) {
+          <span>{{ network.label }}</span>
+        }
+      </div>
+    }
+  } @else {
+    <p i18n="@@social_block_empty_networks_list" style="margin: 0">
+      Please add some social networks.
+    </p>
+  }
+
+  <tail-social-settings *ipEmailBuilderSettings [(options)]="options" [(networks)]="networks" />
+</ng-container>

@@ -1,0 +1,13 @@
+:host {
+  display: block;
+
+  .cdk-drop-list-dragging {
+    .empty-message {
+      display: none;
+    }
+  }
+
+  ::ng-deep .cdk-drag-placeholder {
+    width: 100%;
+  }
+}

@@ -1,0 +1,33 @@
+@if (categories$ | async; as categoryList) {
+  <div class="flex p-2 gap-2 flex-wrap">
+    @for (category of categoryList; track category.category) {
+      <button tailBtn class="capitalize" [class.bg-gray-100]="category === selectedCategory()"
+              (click)="selectedCategory.set(category)">
+        {{ category.category }}
+      </button>
+    }
+  </div>
+} @else {
+  <p i18n="@@loading_templates">Loading, please wait ...</p>
+}
+
+@if (selectedCategory(); as category) {
+  <div class="grid grid-cols-3 gap-2 p-2">
+    @for (template of category.templates; track template) {
+      <div class="relative h-60 rounded border overflow-hidden group">
+        <img [ngSrc]="'/thumbnails/' + category.category + '/' + template + '/' + template + '.jpg'" [alt]="template"
+             class="object-cover object-[center_top] group-hover:object-bottom" fill="cover">
+        <div
+          class="absolute bottom-0 w-full bg-white translate-y-5 p-2 group-hover:translate-y-0 transition-transform text-center">
+          <h3 tailH3>{{ template | titlecase }}</h3>
+          <button tailBtn class="opacity-0 group-hover:opacity-100 transition-opacity mx-auto" i18n="@@use_in_editor"
+                  (click)="selectTemplate(category.category, template)">
+            Use in editor
+          </button>
+        </div>
+      </div>
+    }
+  </div>
+} @else {
+  <p i18n="@@empty_template_list">No templates in this category</p>
+}

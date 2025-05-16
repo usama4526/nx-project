@@ -1,0 +1,13 @@
+<ng-container ngForm>
+  <ul>
+    @for (link of options().elements; track $index) {
+      <li class="flex">
+        <a [href]="link.href" [ngStyle]="linkItemsStyles()">
+          {{ link.label }}
+        </a>
+      </li>
+    }
+  </ul>
+
+  <tail-navigation-settings *ipEmailBuilderSettings [(options)]="options" />
+</ng-container>
