@@ -7,5 +7,8 @@
 [build.environment]
   NETLIFY_USE_ANGULAR_UNIVERSAL = "true"
 
+[functions]
+  directory = "netlify/edge-functions"
+  
 [[plugins]]
   package = "@netlify/angular-runtime"
