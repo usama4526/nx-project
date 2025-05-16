@@ -38,7 +38,7 @@
         ],
         "styles": ["apps/root/src/styles.scss"],
         "scripts": ["node_modules/tinymce/tinymce.min.js"],
-        "server": "apps/root/src/main.server.ts",
+        "server": "apps/root/server.ts",
         "ssr": {
           "entry": "apps/root/server.ts"
         }
