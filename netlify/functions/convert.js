@@ -1,5 +1,6 @@
 // netlify/functions/convert.js
-const { convertIPEmail } = require('@wlocalhost/ngx-email-builder-convertor');
+
+import { convertIPEmail } from '@wlocalhost/ngx-email-builder-convertor';
 
 exports.handler = async function (event, context) {
   // Ensure the request is a POST
