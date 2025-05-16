@@ -1,6 +1,6 @@
 [build]
   # Update with your actual app name
-  command = "nx build root && nx run root:server:production"
+  command = "nx build root
   publish = "dist/apps/root/browser"
 
 # This tells Netlify to use the new Angular runtime
