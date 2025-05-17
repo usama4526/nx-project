@@ -22,7 +22,7 @@ COPY tools/ tools/
 
 # build browser + SSR
 RUN pnpm nx build root --configuration=development \
- && pnpm nx run root:server:production
+ && pnpm nx run root:server:development
 
 # ┌─────────────────────────────┐
 # │ 2) Runtime / Serve Stage   │
