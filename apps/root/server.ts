@@ -11,7 +11,7 @@ import { json, urlencoded } from 'body-parser';
 import { convertIPEmail } from '@wlocalhost/ngx-email-builder-convertor';
 
 const { NODE_ENV, PORT } = process.env;
-//const isProduction = NODE_ENV === 'production';
+const isProduction = NODE_ENV === 'production';
 
 // The Express app is exported so that it can be used by serverless Functions.
 export function app(): express.Express {
@@ -25,7 +25,7 @@ export function app(): express.Express {
 
   // Example Express Rest API endpoints
   server.post('/api/convert', (req, res) => {
-    res.json(convertIPEmail(req.body, true));
+    res.json(convertIPEmail(req.body, isProduction));
   });
 
   server.get(
@@ -60,9 +60,9 @@ export function app(): express.Express {
 
 const server = app();
 if (isMainModule(import.meta.url)) {
-  const port = 4000;
-  server.listen(port, () => {
-    console.log(`Node Express server listening on http://localhost:${port}`);
+  const port: any = PORT || 8080;
+  server.listen(port, '0.0.0.0', () => {
+    console.log(`Node Express server listening on http://0.0.0.0:${port}`);
   });
 }
 
