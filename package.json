@@ -5,7 +5,7 @@
   "scripts": {
     "ng": "nx",
     "start": "nx serve root",
-    "build": "nx build root",
+    "build": "pnpm install --no-frozen-lockfile && nx build root",
     "test": "nx test",
     "prepare": "husky install",
     "preinstall": "npx -y only-allow pnpm",
