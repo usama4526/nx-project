@@ -7,7 +7,6 @@
     "start": "nx serve root",
     "build": "nx build root",
     "test": "nx test",
-    "prepare": "[ \"$NODE_ENV\" != \"production\" ] && husky install || true",
     "preinstall": "npx -y only-allow pnpm",
     "serve:ssr": "pnpm build && node dist/apps/root/server/server.mjs",
     "npm": "pnpm"
