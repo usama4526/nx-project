@@ -25,7 +25,7 @@ export function app(): express.Express {
   const appEngine = new AngularNodeAppEngine();
 
   // Example Express Rest API endpoints
-  server.post('https://stunning-cheesecake-b499ea.netlify.app/', (req, res) => {
+  server.post('/api/convert', (req, res) => {
     console.log(serverDistFolder);
     console.log(import.meta.url);
     res.json(convertIPEmail(req.body, isProduction));
