@@ -21,8 +21,8 @@ COPY apps/ apps/
 COPY tools/ tools/
 
 # build browser + SSR
-RUN pnpm nx build root --configuration=development \
- && pnpm nx run root:server:development
+RUN npm build --configuration=development \
+ && npm start
 
 # ┌─────────────────────────────┐
 # │ 2) Runtime / Serve Stage   │
