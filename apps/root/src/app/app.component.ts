@@ -226,14 +226,18 @@ export class AppComponent implements OnInit {
 
   async sendEmail() {
     const jsonEmail = this.currentEmail.value();
+    console.log(this.currentEmail);
+
     const { html: htmlEmail, mjml } = await lastValueFrom(
       this.currentEmail.convert()
     );
+    //console.log(jsonEmail);
+
     this._appService.mjmlConvert({ mjml: mjml }).subscribe({
       next: (res) => {
         let data = res;
         data = JSON.parse(data);
-        console.log(data);
+        //console.log(data);
 
         const body = JSON.stringify({
           email: jsonEmail,

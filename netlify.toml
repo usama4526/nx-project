@@ -1,9 +1,0 @@
-[build]
-  command = "nx build root"
-  publish = "dist/apps/root/browser"
-
-[build.environment]
-  NETLIFY_USE_ANGULAR_UNIVERSAL = "true"
-
-[[plugins]]
-  package = "@netlify/angular-runtime"
