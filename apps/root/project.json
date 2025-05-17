@@ -67,29 +67,6 @@
       },
       "defaultConfiguration": "production"
     },
-    "server": {
-      "executor": "@angular-devkit/build-angular:server",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/apps/root/server",
-        "main": "apps/root/server.ts",
-        "tsConfig": "apps/root/tsconfig.server.json"
-      },
-      "configurations": {
-        "production": {
-          "outputHashing": "media",
-          "optimization": true,
-          "sourceMap": false,
-          "extractLicenses": true
-        },
-        "development": {
-          "optimization": false,
-          "sourceMap": true,
-          "extractLicenses": false
-        }
-      }
-    },
-
     "serve": {
       "executor": "@angular-devkit/build-angular:dev-server",
       "configurations": {
