@@ -20,11 +20,14 @@ export function app(): express.Express {
   server.use(json({ limit: '1mb' }));
   server.use(urlencoded({ limit: '1mb', extended: true }));
   const serverDistFolder = dirname(fileURLToPath(import.meta.url));
+
   const browserDistFolder = resolve(serverDistFolder, '../browser');
   const appEngine = new AngularNodeAppEngine();
 
   // Example Express Rest API endpoints
   server.post('/api/convert', (req, res) => {
+    console.log(serverDistFolder);
+    console.log(import.meta.url);
     res.json(convertIPEmail(req.body, isProduction));
   });
 
