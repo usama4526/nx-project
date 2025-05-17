@@ -10,7 +10,7 @@ WORKDIR /app
 
 # copy manifests & lockfile
 COPY package.json pnpm-lock.yaml ./
-COPY nx.json tsconfig.base.json project.json ./
+COPY nx.json tsconfig.base.json /apps/root/project.json ./
 COPY tsconfig.* ./
 
 RUN pnpm install --frozen-lockfile
