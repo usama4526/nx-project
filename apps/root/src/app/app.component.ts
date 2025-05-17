@@ -23,7 +23,6 @@ import { AppService } from './app.service';
     CdkMenuBar,
     CdkMenu,
     CdkMenuItem,
-    CdkMenuTrigger,
   ],
   selector: 'app-root',
   template: `
@@ -232,30 +231,14 @@ export class AppComponent implements OnInit {
       this.currentEmail.convert()
     );
     //console.log(jsonEmail);
-
-    this._appService.mjmlConvert({ mjml: mjml }).subscribe({
+    const body = JSON.stringify({
+      email: jsonEmail,
+      html: htmlEmail,
+      emailaddress: 'wusama19@gmail.com',
+    });
+    this._appService.sendEmail(body).subscribe({
       next: (res) => {
-        let data = res;
-        data = JSON.parse(data);
-        //console.log(data);
-
-        const body = JSON.stringify({
-          email: jsonEmail,
-          html: data.html,
-          emailaddress: 'wusama19@gmail.com',
-        });
-
-        setTimeout(() => {
-          console.log(body);
-          this._appService.sendEmail(body).subscribe({
-            next: (res) => {
-              console.log(res);
-            },
-            error: (err) => {
-              console.log(err);
-            },
-          });
-        }, 1000);
+        console.log(res);
       },
       error: (err) => {
         console.log(err);

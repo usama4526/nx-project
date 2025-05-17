@@ -25,7 +25,7 @@ export function app(): express.Express {
   const appEngine = new AngularNodeAppEngine();
 
   // Example Express Rest API endpoints
-  server.post('/api/convert', (req, res) => {
+  server.post('https://email-builder-converter.onrender.com/', (req, res) => {
     console.log(serverDistFolder);
     console.log(import.meta.url);
     res.json(convertIPEmail(req.body, isProduction));

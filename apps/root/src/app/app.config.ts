@@ -9,7 +9,7 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withFetch()),
     provideRouter(appRoutes),
     provideNgxEmailBuilderConfig({
-      convertorPath: '/api/convert',
+      convertorPath: 'https://email-builder-converter.onrender.com/',
     }),
   ],
 };
