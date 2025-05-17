@@ -21,7 +21,7 @@ COPY apps/ apps/
 COPY tools/ tools/
 
 # build browser + SSR
-RUN pnpm nx build root --configuration=production \
+RUN pnpm nx build root --configuration=development \
  && pnpm nx run root:server:production
 
 # ┌─────────────────────────────┐
@@ -33,8 +33,8 @@ RUN npm install -g pnpm
 
 WORKDIR /app
 COPY package.json pnpm-lock.yaml ./
-ENV HUSKY_SKIP_INSTALL=1
-RUN pnpm install --prod --frozen-lockfile
+
+RUN pnpm install --frozen-lockfile
 
 COPY --from=builder /app/dist/apps/root/browser ./dist/browser
 COPY --from=builder /app/dist/apps/root/server ./dist/server
