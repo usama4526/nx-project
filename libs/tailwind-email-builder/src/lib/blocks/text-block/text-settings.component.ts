@@ -70,7 +70,7 @@ import { EditorComponent, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
 })
 export class TextSettingsComponent implements AfterViewInit {
   mergeTags = [
-    '{{disclaimer}}',
+    '{{Disclaimer}}',
     '{AgentName}',
     '{address}',
     '{RepName1}',
@@ -105,7 +105,7 @@ export class TextSettingsComponent implements AfterViewInit {
     '{{Comps}}',
   ];
   init: EditorComponent['init'] = {
-    base_url: '/assets/tinymce', // This must match the new output path
+    base_url: 'assets/tinymce', // This must match the new output path
     suffix: '.min',
     branding: false,
     plugins: 'lists link image table',

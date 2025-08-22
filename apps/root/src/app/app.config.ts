@@ -3,13 +3,15 @@ import { provideRouter } from '@angular/router';
 import { appRoutes } from './app.routes';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { provideNgxEmailBuilderConfig } from '@wlocalhost/ngx-email-builder';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideHttpClient(withFetch()),
     provideRouter(appRoutes),
+    provideAnimations(),
     provideNgxEmailBuilderConfig({
-      convertorPath: 'https://email-builder-converter.onrender.com/',
+      convertorPath: 'https://linksnodejs.com:3000/',
     }),
   ],
 };

@@ -2,10 +2,10 @@
   <tail-email-aside [readonly]="(screen | async) !== null"
                     class="col-span-5 md:col-span-3 sm:col-span-4 select-text" />
   <div class="col-span-7 md:col-span-9 sm:col-span-8 flex flex-col" [ngSwitch]="screen | async">
-    <div class="bg-white shadow-sm border border-b py-3 px-4 w-full flex gap-2 flex-shrink-0">
-      <!-- <button tailBtn (click)="preview()" *ngSwitchDefault>Preview</button> -->
-      <button tailBtn (click)="screen.next(null)" *ngSwitchCase="'preview'">Close Preview</button>
+    <div class="bg-white shadow-sm border border-b py-3 px-4  flex gap-2 flex-shrink-0"   [ngClass]="{'justify-end': screen.value !==null, 'w-full': screen.value == null }">
+      <button tailBtn (click)="screen.next(null)" *ngSwitchCase="'preview'" class="w-28">Close Preview</button>
       <ng-content select=".top-actions" />
+      <button tailBtn (click)="preview()" *ngSwitchDefault>Preview</button>
     </div>
 
     <ng-container *ngSwitchCase="'preview'">

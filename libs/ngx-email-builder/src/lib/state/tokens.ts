@@ -17,7 +17,7 @@ export const AIP_EMAIL_BUILDER = new InjectionToken('AIP_EMAIL_BUILDER', {
           previewText: '',
           // @ts-expect-error - The auto is not defined
           width: {
-            value: 600,
+            value: 800,
             unit: 'px',
             units: ['px'],
           },

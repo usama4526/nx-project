@@ -36,6 +36,21 @@ import { TooltipDirective } from '../directives/tooltip/tooltip.directive';
   ],
   host: {
     '(click)': '$event.stopPropagation()', // Prevents the click event from bubbling up to the parent
-  }
+  },
 })
-export class StructureComponent extends AIPStructure {}
+export class StructureComponent extends AIPStructure {
+  hideDisclaimer(block: any): boolean {
+    if (!block.innerText) return false;
+    if (block.innerText.includes('{disclaimer}')) {
+      return true;
+    } else return false;
+  }
+  hasDisclaimerInStructure(): boolean {
+    const structure = this.currentStructure();
+
+    // Check all columns and blocks for a disclaimer block
+    return structure.elements.some((column) => {
+      return column.some((block) => this.hideDisclaimer(block));
+    });
+  }
+}

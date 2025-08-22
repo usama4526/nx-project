@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AppService {
@@ -9,7 +9,7 @@ export class AppService {
   readonly loadTemplateUrl =
     'https://ltsd.thelinksystems.com/builder/functions/getobject.php';
   readonly sendEmailUrl =
-    'https://ltsd.thelinksystems.com/builder/functions/sendtestemail.php';
+    'https://ltsd.thelinksystems.com/builder/functions/sendtestemail2.php';
 
   readonly mjmlPublicKey = '874f359e-0273-46d3-b33c-3a9d239f1bc3';
   readonly mjmlApplicationId = 'bd620e9e-8d92-4eb6-9708-7f541007e353';

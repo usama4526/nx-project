@@ -20,14 +20,11 @@ export function app(): express.Express {
   server.use(json({ limit: '1mb' }));
   server.use(urlencoded({ limit: '1mb', extended: true }));
   const serverDistFolder = dirname(fileURLToPath(import.meta.url));
-
   const browserDistFolder = resolve(serverDistFolder, '../browser');
   const appEngine = new AngularNodeAppEngine();
 
   // Example Express Rest API endpoints
-  server.post('https://email-builder-converter.onrender.com/', (req, res) => {
-    console.log(serverDistFolder);
-    console.log(import.meta.url);
+  server.post('https://linksnodejs.com:3000/', (req, res) => {
     res.json(convertIPEmail(req.body, isProduction));
   });
 
@@ -63,9 +60,9 @@ export function app(): express.Express {
 
 const server = app();
 if (isMainModule(import.meta.url)) {
-  const port = Number(PORT) || 8080;
-  server.listen(port, '0.0.0.0', () => {
-    console.log(`Node Express server listening on http://0.0.0.0:${port}`);
+  const port = PORT || 3000;
+  server.listen(port, () => {
+    console.log(`Node Express server listening on http://localhost:${port}`);
   });
 }
 

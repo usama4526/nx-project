@@ -1,6 +1,7 @@
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   inject,
   model,
@@ -37,7 +38,7 @@ import { formViewProvider } from '../../directives/form-providers';
   template: `
     <h2 tailH2 i18n="@@image_block_image">Image</h2>
     <div tailPanel>
-      <tail-image-upload ngModelName="src" />
+      <tail-image-upload (linkForVideo)="updateVideoLink($event)" ngModelName="src" />
     </div>
     <ng-container ngModelGroup="options">
       <h2 tailH2 i18n="@@image_block_attributes">Attributes</h2>
@@ -86,6 +87,7 @@ export class ImageSettingsComponent implements AfterViewInit {
     src: string;
     options: IImageBlockOptions;
   }>();
+  cdr = inject(ChangeDetectorRef);
 
   ngAfterViewInit() {
     const { form } = this.form;
@@ -100,6 +102,31 @@ export class ImageSettingsComponent implements AfterViewInit {
           this.src.set(src);
           this.options.set(options);
         });
+    });
+  }
+
+  updateVideoLink(link: string) {
+    // Make sure options and link object exists
+    const currentOptions = this.options();
+    if (!currentOptions.link) {
+      currentOptions.link = { href: link, target: '_blank' };
+    } else {
+      currentOptions.link.href = link;
+    }
+
+    // Update the options
+    this.options.set({ ...currentOptions });
+
+    // Force form to update with new values
+    setTimeout(() => {
+      this.form.form.patchValue(
+        {
+          options: this.options(),
+        },
+        { emitEvent: false }
+      );
+      this.cdr.markForCheck();
+      this.cdr.detectChanges();
     });
   }
 }

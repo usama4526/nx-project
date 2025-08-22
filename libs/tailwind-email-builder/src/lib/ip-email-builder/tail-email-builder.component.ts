@@ -6,6 +6,7 @@ import {
 } from '@wlocalhost/ngx-email-builder';
 import {
   AsyncPipe,
+  CommonModule,
   NgSwitch,
   NgSwitchCase,
   NgSwitchDefault,
@@ -14,6 +15,7 @@ import { FormBtnDirective } from '../directives/form/form-input.directive';
 import { EmailBodyComponent } from '../email-body/email-body.component';
 import { EmailAsideComponent } from '../email-aside/email-aside.component';
 import { BehaviorSubject, map } from 'rxjs';
+import { EmailBuilderStateService } from '../email-builder-state.service';
 
 type TPreviewDevice = 'desktop' | 'tablet' | 'mobile';
 
@@ -31,6 +33,7 @@ type TPreviewDevice = 'desktop' | 'tablet' | 'mobile';
     EmailAsideComponent,
     AsyncPipe,
     IpPreviewLinkPipe,
+    CommonModule,
   ],
 })
 export class TailEmailBuilderComponent {
@@ -42,7 +45,9 @@ export class TailEmailBuilderComponent {
   /**
    * A behavior subject that represents the current screen the user is on.
    */
-  readonly screen = new BehaviorSubject<'preview' | null>(null);
+  get screen() {
+    return this.emailBuilderStateService.screen;
+  }
   /**
    * A map of device sizes.
    */
@@ -73,6 +78,9 @@ export class TailEmailBuilderComponent {
    * Switches the current screen to the preview screen.
    * Displays an alert if there are no structures to preview.
    */
+  // Inject the shared service
+  private emailBuilderStateService = inject(EmailBuilderStateService);
+
   preview(): void {
     if (!this.currentEmail.value().structures.length) {
       this.middlewareService.alert(

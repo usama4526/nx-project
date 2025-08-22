@@ -10,6 +10,7 @@
     @for (block of column; track block.id) {
     <div class="relative group" cdkDrag [cdkDragData]="block">
       <div class="overflow" *ipColumnBlock="block; index: $index; let ins">
+        @if (!hideDisclaimer(block)) {
         <button class="tool-button" (click)="ins.edit()">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -63,6 +64,7 @@
             />
           </svg>
         </button>
+        }
       </div>
     </div>
     }
@@ -70,6 +72,7 @@
   }
 
   <!--Structure tool buttons-->
+  @if (!hasDisclaimerInStructure()) {
   <div
     class="absolute top-0 right-0 opacity-0 group-hover:opacity-100 group-hover:z-20 transition-opacity bg-white p-1 shadow-lg rounded border-[1px] gap-2 flex"
   >
@@ -100,6 +103,7 @@
       </svg>
     </button>
   </div>
+  }
 
   <!--Structure settings-->
   <tail-structure-settings *ipEmailBuilderSettings [index]="index()">

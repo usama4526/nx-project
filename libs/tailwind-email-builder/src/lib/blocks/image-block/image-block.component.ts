@@ -118,7 +118,7 @@ export const ImageBlock = addIPEmailBuilderBlock<IImageBlockOptions>(
           units: ['px'],
         },
         link: {
-          href: '',
+          href: 'https://',
           target: '_blank',
         },
         align: 'center',

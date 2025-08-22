@@ -8,12 +8,19 @@
     [(ngModel)]="imageUrl"
     placeholder="https://..."
   />
-  <button
-    class="px-4 py-1.5 my-3 bg-blue-500 rounded text-white"
-    (click)="imageUploadRef.click()"
-  >
-    Upload Image
-  </button>
+  <div class="relative">
+    <button
+      class="px-4 py-1.5 my-3 bg-blue-500 rounded text-white w-full disabled:opacity-50 disabled:cursor-not-allowed"
+      (click)="imageUploadRef.click()"
+      [disabled]="isUploading"
+    >
+      <span *ngIf="!isUploading">Upload Image</span>
+      <span *ngIf="isUploading" class="flex items-center justify-center">
+        <span class="loader mr-2"></span>
+        Uploading...
+      </span>
+    </button>
+  </div>
   <p>
     {{ imageUploadRef.files ? imageUploadRef.files[0]?.name : 'Choose Image' }}
   </p>
@@ -24,4 +31,86 @@
     #imageUploadRef
     (change)="uploadImage($event)"
   />
+  <hr />
+  <div>
+    <button
+      (click)="openConfirmDialog()"
+      class="px-4 py-1.5 my-3 bg-orange-500 rounded text-white w-full"
+    >
+      Convert to Signature
+    </button>
+  </div>
+  <!-- Custom Modal -->
+  <div
+    *ngIf="showDialog"
+    class="fixed inset-0 z-50 flex items-center justify-center"
+  >
+    <!-- Backdrop -->
+    <div
+      class="fixed inset-0 bg-black bg-opacity-50"
+      (click)="closeDialog()"
+    ></div>
+
+    <!-- Modal Content -->
+    <div
+      class="bg-white rounded-lg shadow-lg p-6 max-w-md w-full mx-4 relative z-10"
+    >
+      <h2 class="text-lg font-semibold mb-4">Attention:</h2>
+      <p class="mb-6 text-gray-700">
+        You are requesting to convert this image holder to be replaced with Sign
+        block. Please confirm
+      </p>
+
+      <div class="flex justify-end space-x-3">
+        <button
+          (click)="closeDialog()"
+          class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400"
+        >
+          Cancel
+        </button>
+        <button
+          (click)="confirmConversion()"
+          class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+        >
+          Continue
+        </button>
+      </div>
+    </div>
+  </div>
+  <hr />
+  <div class="d-flex flex-col mt-5">
+    <div>
+      <label [tailLabel]="i" class="text-black pl-1">Video Source</label>
+      <input
+        tailInput
+        type="text"
+        placeholder="Video Link..."
+        [(ngModel)]="videoUrl"
+        name="videoUrl"
+      />
+    </div>
+    <div class="mt-3">
+      <select tailInput name="thumbnailType" [(ngModel)]="thumbnailType">
+        <option value="undefined">Choose Thumbnail Type</option>
+        <option value="image">Static Image</option>
+        <option value="gif">GIF/Animated</option>
+      </select>
+    </div>
+    <div>
+      <button
+        class="px-4 py-1.5 my-3 bg-orange-500 rounded text-white w-full disabled:opacity-50 disabled:cursor-not-allowed"
+        (click)="applyVideoChanges()"
+        [disabled]="isProcessingVideo"
+      >
+        <span *ngIf="!isProcessingVideo">Apply Video Changes</span>
+        <span
+          *ngIf="isProcessingVideo"
+          class="flex items-center justify-center"
+        >
+          <span class="loader mr-2"></span>
+          Processing Video...
+        </span>
+      </button>
+    </div>
+  </div>
 </div>

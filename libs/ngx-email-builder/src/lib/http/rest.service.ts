@@ -12,8 +12,6 @@ export class IPEmailRestService {
   readonly #config = inject(IP_EMAIL_BUILDER_CONFIG);
 
   convert(email: IIPEmail): Observable<IMjmlServerResponse> {
-    console.log(email);
-
     return this.http.post<IMjmlServerResponse>(
       this.#config.convertorPath,
       email
