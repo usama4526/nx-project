@@ -13,6 +13,7 @@ import {
 } from '@angular/cdk/menu';
 import { BehaviorSubject, lastValueFrom } from 'rxjs';
 import { AppService } from './app.service';
+import { DomainService } from './domain.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { trigger, transition, style, animate } from '@angular/animations';
@@ -343,6 +344,7 @@ export class AppComponent implements OnInit {
   private emailBuilderStateService = inject(EmailBuilderStateService);
   _activeRoute = inject(ActivatedRoute);
   _appService = inject(AppService);
+  _domainService = inject(DomainService);
   templateInfo: { id: string; type: string; domain: string } = {
     id: '',
     type: '',
@@ -625,7 +627,7 @@ export class AppComponent implements OnInit {
             console.log(res);
             this.showUnsavedChangesModal = false;
             this.isSaving = false; // Reset loading state
-            window.location.href = `https://${this.templateInfo.domain}/links/managetemplate1.php`;
+            window.location.href = this._domainService.getManageTemplateUrl();
           },
           error: (err) => {
             console.log(err);
@@ -704,6 +706,6 @@ export class AppComponent implements OnInit {
   }
 
   redirectToPreviousPage() {
-    window.location.href = `https://${this.templateInfo.domain}/links/managetemplate1.php`;
+    window.location.href = this._domainService.getManageTemplateUrl();
   }
 }
