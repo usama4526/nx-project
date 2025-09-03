@@ -46,4 +46,40 @@ export class EmailAsideComponent extends AIPEmailBuilderAside {
       return prev?.source[0] !== resetRef ? 0 : 1;
     },
   });
+
+  // Confirmation dialog state
+  showDeleteConfirmation = false;
+
+  showDeleteConfirmationDialog() {
+    this.showDeleteConfirmation = true;
+  }
+
+  hideDeleteConfirmationDialog() {
+    this.showDeleteConfirmation = false;
+  }
+
+  confirmDeleteAllBlocks() {
+    this.deleteAllBlocks();
+    this.hideDeleteConfirmationDialog();
+  }
+
+  deleteAllBlocks() {
+    const structures = this.currentEmail.value().structures;
+    const totalStructures = structures.length;
+    
+    // Keep the last 2 structures (image and disclaimer text)
+    const structuresToKeep = 2;
+    
+    if (totalStructures <= structuresToKeep) {
+      return; // Don't delete if we have 2 or fewer structures
+    }
+    
+    // Remove structures from the beginning, keeping the last 2
+    const structuresToRemove = totalStructures - structuresToKeep;
+    
+    // Remove from the end first to avoid index shifting issues
+    for (let i = structuresToRemove - 1; i >= 0; i--) {
+      this.currentEmail.structures.remove(i);
+    }
+  }
 }
