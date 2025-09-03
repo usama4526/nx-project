@@ -781,7 +781,7 @@ export class AppComponent implements OnInit {
     // Auto-hide after 5 seconds
     setTimeout(() => {
       this.hideSnackbar();
-    }, 5000);
+    }, 3000);
   }
 
   hideSnackbar(): void {

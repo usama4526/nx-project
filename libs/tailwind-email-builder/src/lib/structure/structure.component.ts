@@ -41,16 +41,22 @@ import { TooltipDirective } from '../directives/tooltip/tooltip.directive';
 export class StructureComponent extends AIPStructure {
   hideDisclaimer(block: any): boolean {
     if (!block.innerText) return false;
-    if (block.innerText.includes('{disclaimer}')) {
+    if (block.innerText.includes('{{Disclaimer}}')) {
       return true;
     } else return false;
   }
   hasDisclaimerInStructure(): boolean {
     const structure = this.currentStructure();
 
-    // Check all columns and blocks for a disclaimer block
-    return structure.elements.some((column) => {
-      return column.some((block) => this.hideDisclaimer(block));
+    // Check if structure contains only disclaimer blocks
+    const allBlocks: any[] = [];
+    structure.elements.forEach(column => {
+      allBlocks.push(...column);
     });
+    
+    if (allBlocks.length === 0) return false;
+    
+    // If all blocks are disclaimer blocks, hide structure buttons
+    return allBlocks.every((block: any) => this.hideDisclaimer(block));
   }
 }

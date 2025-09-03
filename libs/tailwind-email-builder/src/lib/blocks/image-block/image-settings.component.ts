@@ -41,8 +41,24 @@ import { formViewProvider } from '../../directives/form-providers';
       <tail-image-upload (linkForVideo)="updateVideoLink($event)" ngModelName="src" />
     </div>
     <ng-container ngModelGroup="options">
-      <h2 tailH2 i18n="@@image_block_attributes">Attributes</h2>
-      <div tailPanel>
+      <h2 
+        tailH2 
+        i18n="@@image_block_attributes" 
+        class="cursor-pointer flex items-center justify-between hover:bg-gray-50 p-2 -m-2 rounded transition-colors"
+        (click)="toggleAttributesSection()"
+      >
+        <span>Attributes</span>
+        <svg 
+          class="h-4 w-4 transition-transform duration-200" 
+          [class.rotate-180]="!isAttributesExpanded"
+          fill="none" 
+          viewBox="0 0 24 24" 
+          stroke="currentColor"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        </svg>
+      </h2>
+      <div tailPanel [hidden]="!isAttributesExpanded">
         <div class="grid grid-cols-3 gap-2">
           <div class="flex flex-col col-span-2">
             <label [tailLabel]="a" i18n="@@image_block_alternative">Alternative text</label>
@@ -55,19 +71,67 @@ import { formViewProvider } from '../../directives/form-providers';
         <tail-link class="pt-2" />
         <p tailHint i18n="@@image_block_link_description">Link to redirect to on click</p>
       </div>
-      <h2 tailH2 i18n="@@image_block_sizes">Sizes</h2>
-      <div tailPanel>
+      <h2 
+        tailH2 
+        i18n="@@image_block_sizes" 
+        class="cursor-pointer flex items-center justify-between hover:bg-gray-50 p-2 -m-2 rounded transition-colors"
+        (click)="toggleSizesSection()"
+      >
+        <span>Sizes</span>
+        <svg 
+          class="h-4 w-4 transition-transform duration-200" 
+          [class.rotate-180]="!isSizesExpanded"
+          fill="none" 
+          viewBox="0 0 24 24" 
+          stroke="currentColor"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        </svg>
+      </h2>
+      <div tailPanel [hidden]="!isSizesExpanded">
         <h3 tailH3 i18n="@@width">Width</h3>
         <tail-width-height showAutoToggle />
         <h3 tailH3 class="pt-2" i18n="@@height">Height</h3>
         <tail-width-height showAutoToggle ngModelName="height" />
       </div>
-      <h2 tailH2 i18n="@@border">Border</h2>
-      <div tailPanel>
+      <h2 
+        tailH2 
+        i18n="@@border" 
+        class="cursor-pointer flex items-center justify-between hover:bg-gray-50 p-2 -m-2 rounded transition-colors"
+        (click)="toggleBorderSection()"
+      >
+        <span>Border</span>
+        <svg 
+          class="h-4 w-4 transition-transform duration-200" 
+          [class.rotate-180]="!isBorderExpanded"
+          fill="none" 
+          viewBox="0 0 24 24" 
+          stroke="currentColor"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        </svg>
+      </h2>
+      <div tailPanel [hidden]="!isBorderExpanded">
         <tail-border />
       </div>
-      <h2 tailH2 i18n="@@padding">Padding</h2>
-      <div tailPanel>
+      <h2 
+        tailH2 
+        i18n="@@padding" 
+        class="cursor-pointer flex items-center justify-between hover:bg-gray-50 p-2 -m-2 rounded transition-colors"
+        (click)="togglePaddingSection()"
+      >
+        <span>Padding</span>
+        <svg 
+          class="h-4 w-4 transition-transform duration-200" 
+          [class.rotate-180]="!isPaddingExpanded"
+          fill="none" 
+          viewBox="0 0 24 24" 
+          stroke="currentColor"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        </svg>
+      </h2>
+      <div tailPanel [hidden]="!isPaddingExpanded">
         <tail-padding />
       </div>
     </ng-container>
@@ -88,6 +152,28 @@ export class ImageSettingsComponent implements AfterViewInit {
     options: IImageBlockOptions;
   }>();
   cdr = inject(ChangeDetectorRef);
+
+  // Collapsible sections state (default collapsed)
+  isAttributesExpanded = false;
+  isSizesExpanded = false;
+  isBorderExpanded = false;
+  isPaddingExpanded = false;
+
+  toggleAttributesSection() {
+    this.isAttributesExpanded = !this.isAttributesExpanded;
+  }
+
+  toggleSizesSection() {
+    this.isSizesExpanded = !this.isSizesExpanded;
+  }
+
+  toggleBorderSection() {
+    this.isBorderExpanded = !this.isBorderExpanded;
+  }
+
+  togglePaddingSection() {
+    this.isPaddingExpanded = !this.isPaddingExpanded;
+  }
 
   ngAfterViewInit() {
     const { form } = this.form;

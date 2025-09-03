@@ -18,6 +18,7 @@ import { PaddingComponent } from '../../settings/padding/padding.component';
 import { AlignComponent } from '../../settings/align/align.component';
 import { LinkComponent } from '../../settings/link/link.component';
 import { LineHeightComponent } from '../../settings/line-height/line-height.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'tail-button-settings',
@@ -40,12 +41,44 @@ import { LineHeightComponent } from '../../settings/line-height/line-height.comp
       <div tailPanel>
         <tail-color ngModelName="backgroundColor" />
       </div>
-      <h2 tailH2 i18n="@@border">Border</h2>
-      <div tailPanel>
+      <h2 
+        tailH2 
+        i18n="@@border" 
+        class="cursor-pointer flex items-center justify-between hover:bg-gray-50 p-2 -m-2 rounded transition-colors"
+        (click)="toggleBorderSection()"
+      >
+        <span>Border</span>
+        <svg 
+          class="h-4 w-4 transition-transform duration-200" 
+          [class.rotate-180]="!isBorderExpanded"
+          fill="none" 
+          viewBox="0 0 24 24" 
+          stroke="currentColor"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        </svg>
+      </h2>
+      <div tailPanel [hidden]="!isBorderExpanded">
         <tail-border />
       </div>
-      <h2 tailH2 i18n="@@button_block_attributes">Attributes</h2>
-      <div tailPanel>
+      <h2 
+        tailH2 
+        i18n="@@button_block_attributes" 
+        class="cursor-pointer flex items-center justify-between hover:bg-gray-50 p-2 -m-2 rounded transition-colors"
+        (click)="toggleAttributesSection()"
+      >
+        <span>Attributes</span>
+        <svg 
+          class="h-4 w-4 transition-transform duration-200" 
+          [class.rotate-180]="!isAttributesExpanded"
+          fill="none" 
+          viewBox="0 0 24 24" 
+          stroke="currentColor"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        </svg>
+      </h2>
+      <div tailPanel [hidden]="!isAttributesExpanded">
         <div class="grid grid-cols-3 gap-2">
           <tail-align class="col-span-2" mode="horizontal" />
           <button tailBtn (click)="options().fullWidth = !options().fullWidth" [class.active]="options().fullWidth"
@@ -81,6 +114,7 @@ import { LineHeightComponent } from '../../settings/line-height/line-height.comp
     AlignComponent,
     LinkComponent,
     LineHeightComponent,
+    CommonModule
   ],
   viewProviders: [formViewProvider()],
 })
@@ -93,6 +127,18 @@ export class ButtonSettingsComponent implements AfterViewInit {
     options: IButtonBlockOptions;
     innerText: string;
   }>();
+
+  // Collapsible sections state
+  isBorderExpanded = false;
+  isAttributesExpanded = false;
+
+  toggleBorderSection() {
+    this.isBorderExpanded = !this.isBorderExpanded;
+  }
+
+  toggleAttributesSection() {
+    this.isAttributesExpanded = !this.isAttributesExpanded;
+  }
 
   ngAfterViewInit() {
     const { form } = this.form;
