@@ -50,6 +50,15 @@ import { EmailBuilderStateService } from 'libs/tailwind-email-builder/src/lib/em
         ),
       ]),
     ]),
+    trigger('snackbarSlide', [
+      transition(':enter', [
+        style({ transform: 'translateX(100%)', opacity: 0 }),
+        animate('300ms ease-out', style({ transform: 'translateX(0)', opacity: 1 })),
+      ]),
+      transition(':leave', [
+        animate('300ms ease-in', style({ transform: 'translateX(100%)', opacity: 0 })),
+      ]),
+    ]),
   ],
   template: `
     <tail-email-builder>
@@ -308,6 +317,71 @@ import { EmailBuilderStateService } from 'libs/tailwind-email-builder/src/lib/em
         </div>
       </div>
     </tail-email-builder>
+
+    <!-- Snackbar for notifications -->
+    <div
+      *ngIf="showSnackbar"
+      [@snackbarSlide]
+      class="fixed top-4 right-4 z-50 max-w-sm w-full"
+    >
+      <div
+        class="rounded-lg shadow-lg p-4 flex items-center gap-3"
+        [ngClass]="{
+          'bg-green-500 text-white': snackbarType === 'success',
+          'bg-red-500 text-white': snackbarType === 'error'
+        }"
+      >
+        <!-- Success Icon -->
+        <svg
+          *ngIf="snackbarType === 'success'"
+          class="h-6 w-6 flex-shrink-0"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M5 13l4 4L19 7"
+          />
+        </svg>
+        
+        <!-- Error Icon -->
+        <svg
+          *ngIf="snackbarType === 'error'"
+          class="h-6 w-6 flex-shrink-0"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"
+          />
+        </svg>
+        
+        <div class="flex-1">
+          <p class="text-sm font-medium">{{ snackbarMessage }}</p>
+        </div>
+        
+        <button
+          (click)="hideSnackbar()"
+          class="flex-shrink-0 ml-2 text-white hover:text-gray-200 focus:outline-none"
+        >
+          <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
 
     <!-- <ng-template #exportMenu>
       <div class="flex bg-white shadow-lg p-4 rounded gap-4" cdkMenu>
@@ -656,17 +730,25 @@ export class AppComponent implements OnInit {
     this._appService.sendEmail(body).subscribe({
       next: (res) => {
         console.log(res);
+        this.showSnackbarMessage('Email sent successfully!', 'success');
+        this.togglePopup();
       },
       error: (err) => {
         console.log(err);
+        this.showSnackbarMessage('Failed to send email. Please try again.', 'error');
+        this.togglePopup();
       },
     });
-    this.togglePopup();
   }
 
   isPopupOpen = false;
   email = '';
   isEmailValid = false;
+
+  // Snackbar properties
+  showSnackbar = false;
+  snackbarMessage = '';
+  snackbarType: 'success' | 'error' = 'success';
 
   togglePopup(): void {
     this.isPopupOpen = !this.isPopupOpen;
@@ -689,6 +771,21 @@ export class AppComponent implements OnInit {
   resetForm(): void {
     this.email = '';
     this.isEmailValid = false;
+  }
+
+  showSnackbarMessage(message: string, type: 'success' | 'error'): void {
+    this.snackbarMessage = message;
+    this.snackbarType = type;
+    this.showSnackbar = true;
+    
+    // Auto-hide after 5 seconds
+    setTimeout(() => {
+      this.hideSnackbar();
+    }, 5000);
+  }
+
+  hideSnackbar(): void {
+    this.showSnackbar = false;
   }
 
   goBack() {

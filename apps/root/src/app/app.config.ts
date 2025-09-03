@@ -11,7 +11,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(appRoutes),
     provideAnimations(),
     provideNgxEmailBuilderConfig({
-      convertorPath: 'https://linksnodejs.com:3000/',
+      convertorPath: 'https://www.linksnodejs.com/',
     }),
   ],
 };

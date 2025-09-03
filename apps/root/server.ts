@@ -24,7 +24,7 @@ export function app(): express.Express {
   const appEngine = new AngularNodeAppEngine();
 
   // Example Express Rest API endpoints
-  server.post('https://linksnodejs.com:3000/', (req, res) => {
+  server.post('https://www.linksnodejs.com/', (req, res) => {
     res.json(convertIPEmail(req.body, isProduction));
   });
 
